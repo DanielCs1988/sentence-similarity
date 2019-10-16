@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from 'react'
+import ReactQuill from 'react-quill'
+
+import processText from './text-processor'
+import 'react-quill/dist/quill.snow.css'
+import './App.css'
 
 function App() {
+  const [text, setText] = useState('')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="sub-container">
+        <ReactQuill className="editor" value={text} onChange={setText} />
+        <button className="btn" onClick={() => processText(text)}>Click me!</button>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
