@@ -3,12 +3,6 @@ const sim = require('compute-cosine-similarity')
 
 const SIMILARITY_THRESHOLD = 0.5
 
-// https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
-function strip(html) {
-  const doc = new DOMParser().parseFromString(html, 'text/html')
-  return doc.body.textContent || ''
-}
-
 async function analyzeSimilarity(sentences) {
   const model = await use.load()
   const embeddings = await Promise.all(sentences.map(sentence => model.embed(sentence)))
@@ -45,8 +39,7 @@ function registerSimilarSentence(data, currentSentence, sentenceComparedTo) {
   }
 }
 
-async function processText(html) {
-  const text = strip(html)
+async function processText(text) {
   const sentences = text
     .match(/[^.!?]+[.!?]+/g)
     .map(sentence => sentence.trim())
