@@ -16,6 +16,8 @@
 .editor {
   width: 100%;
   height: calc((100vh - 5rem) / 2);
+  background-color: white;
+  border: 1px solid lightblue;
 }
 
 .btn {
@@ -35,4 +37,9 @@
 }
 .btn:hover {
   background: #0688fa linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+}
+
+.toxic {
+  text-decoration: underline;
+  text-decoration-color: red;
 }

@@ -1211,6 +1211,18 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
+"@tensorflow-models/toxicity@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@tensorflow-models/toxicity/-/toxicity-1.2.0.tgz#544f4604e38ff102ed8a55db7d8f7b5a195d8928"
+  integrity sha512-9bGWPpjNpLIjAKmUttUA4YhPCI6Py/zBxA9H+DRzfLE/OUZUYw9Eams7NNiUIOqs3LzM89lqzjF6L2iIXbxOlA==
+  dependencies:
+    "@tensorflow-models/universal-sentence-encoder" "~1.2.0"
+
+"@tensorflow-models/universal-sentence-encoder@~1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@tensorflow-models/universal-sentence-encoder/-/universal-sentence-encoder-1.2.0.tgz#a44c5b66a778c49c42c88c775586b7a7f5bc249b"
+  integrity sha512-UV7bXkK+Uns0zPT3TfAQ+A3nhYIC2TMEZJ+7aL0juJ2Nf0NOE+2EBIb90TH9DpiGQukA2AgY2P5hK+bvhc8BZA==
+
 "@tensorflow/tfjs-converter@1.2.11":
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-converter/-/tfjs-converter-1.2.11.tgz#c81a8bde669179e20e676dba790eeca61fa6ce0a"

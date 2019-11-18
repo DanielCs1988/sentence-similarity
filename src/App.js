@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 
 import processText from './text-processor'
@@ -12,7 +12,14 @@ function App() {
     <div className="container">
       <div className="sub-container">
         <ReactQuill className="editor" value={text} onChange={setText} />
-        <button className="btn" onClick={() => processText(text)}>Click me!</button>
+        <button className="btn" onClick={async () => {
+          const data = await processText(text)
+          Object.entries(data).forEach(([ key, value ]) => {
+            if (value.length > 0) {
+              setText(prevText => prevText.replace(key, `<u>${key}</u>`))
+            }
+          })
+        }}>Click me!</button>
       </div>
     </div>
   )
