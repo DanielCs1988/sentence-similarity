@@ -1,7 +1,7 @@
 import * as use from '@tensorflow-models/universal-sentence-encoder'
 const sim = require('compute-cosine-similarity')
 
-const SIMILARITY_THRESHOLD = 0.5
+const SIMILARITY_THRESHOLD = 0.7
 
 async function analyzeSimilarity(sentences) {
   const model = await use.load()
