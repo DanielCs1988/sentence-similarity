@@ -39,7 +39,15 @@
   background: #0688fa linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
 }
 
-.toxic {
-  text-decoration: underline;
-  text-decoration-color: red;
+.sentences {
+  text-align: left;
+  margin-top: 2rem;
+}
+
+li {
+  margin: 8px 0;
+}
+li::before {
+  content: '-';
+  margin: 0 8px;
 }

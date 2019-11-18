@@ -1,6 +1,7 @@
-import * as toxicity from '@tensorflow-models/toxicity'
+import * as use from '@tensorflow-models/universal-sentence-encoder'
+const sim = require('compute-cosine-similarity')
 
-const THRESHOLD = 0.5
+const SIMILARITY_THRESHOLD = 0.5
 
 // https://stackoverflow.com/questions/822452/strip-html-from-text-javascript/47140708#47140708
 function strip(html) {
@@ -8,22 +9,40 @@ function strip(html) {
   return doc.body.textContent || ''
 }
 
-async function analyzeToxicity(sentences) {
-  const model = await toxicity.load(THRESHOLD)
-  const predictions = await model.classify(sentences)
+async function analyzeSimilarity(sentences) {
+  const model = await use.load()
+  const embeddings = await Promise.all(sentences.map(sentence => model.embed(sentence)))
+  const vectors = await Promise.all(embeddings.map(embedding => embedding.data()))
 
+  return compareVectors(vectors, sentences)
+}
+
+function compareVectors(vectors, sentences) {
   const data = {}
-  sentences.forEach(sentence => data[sentence] = [])
 
-  predictions.forEach(({ label, results }) => {
-    results.forEach(({ match }, index) => {
-      if (match) {
-        data[sentences[index]].push(label)
+  for (let i = 0; i < vectors.length; i++) {
+    for (let j = i + 1; j < vectors.length; j++) {
+      const currentVector = vectors[i]
+      const vectorComparedTo = vectors[j]
+      const vectorSimilarity = sim([...currentVector], [...vectorComparedTo])
+
+      if (vectorSimilarity >= SIMILARITY_THRESHOLD) {
+        const currentSentence = sentences[i]
+        const sentenceComparedTo = sentences[j]
+        registerSimilarSentence(data, currentSentence, sentenceComparedTo)
       }
-    })
-  })
+    }
+  }
 
   return data
+}
+
+function registerSimilarSentence(data, currentSentence, sentenceComparedTo) {
+  if (data[currentSentence] === undefined) {
+    data[currentSentence] = [ sentenceComparedTo ]
+  } else {
+    data[currentSentence].push(sentenceComparedTo)
+  }
 }
 
 async function processText(html) {
@@ -32,7 +51,7 @@ async function processText(html) {
     .match(/[^.!?]+[.!?]+/g)
     .map(sentence => sentence.trim())
 
-  return analyzeToxicity(sentences)
+  return analyzeSimilarity(sentences)
 }
 
 export default processText
